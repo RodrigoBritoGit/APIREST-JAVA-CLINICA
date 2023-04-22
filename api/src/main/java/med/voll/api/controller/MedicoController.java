@@ -28,13 +28,18 @@ public class MedicoController {
 	@Autowired
 	private MedicoRepository repository;
 	
-	@PostMapping
-	@Transactional
-	public void cadastrar (@RequestBody @Valid DadosCadastroMedico dados) {
-		repository.save(new Medico(dados));
-		//System.out.println(dados);
+	@RequestMapping("/")
+	public String Login () {
+		return "index";
 	}
 	
+	@PostMapping
+	@Transactional
+	public String cadastrar (@RequestBody @Valid DadosCadastroMedico dados) {
+		repository.save(new Medico(dados));
+		return "Cadastrar";
+		//System.out.println(dados);
+	}
 	
 	@GetMapping
 	public Page<DadosListagemMedico> listar( @PageableDefault(size = 10, sort = {"nome"}) Pageable pagina) {
